@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/nextjs-first-app.iml" filepath="$PROJECT_DIR$/.idea/nextjs-first-app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/web3-articles.iml" filepath="$PROJECT_DIR$/.idea/web3-articles.iml" />
     </modules>
   </component>
 </project>
