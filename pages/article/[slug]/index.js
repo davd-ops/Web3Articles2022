@@ -8,6 +8,15 @@ const Article = ({article}) => {
     //const router = useRouter()
     ///const {id} = router.query
 
+    if (article.success === false) {
+        return (
+            <>
+                <p>ERROR 404</p>
+                <h2>{article.message}</h2>
+            </>
+        )
+    }
+
     return (
         <>
             <Meta title={article.title} description={article.excerpt} />
@@ -20,7 +29,7 @@ const Article = ({article}) => {
 };
 
 export const getStaticProps = async (context) => {
-    const res = await fetch(`${server}/api/articles/${context.params.id}`)
+    const res = await fetch(`${server}/api/articles/${context.params.slug}`)
 
     const article = await res.json()
 
@@ -36,8 +45,9 @@ export const getStaticPaths = async () => {
 
     const articles = await res.json()
 
-    const ids = articles.map(article => article.id)
-    const paths = ids.map(id => ({params: {id: id.toString()}}))
+    const slugs = articles.map(article => article.slug)
+
+    const paths = slugs.map(slug => ({params: {slug: slug.toString()}}))
 
     return {
         paths,
