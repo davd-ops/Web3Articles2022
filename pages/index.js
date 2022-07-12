@@ -1,7 +1,7 @@
-import Image from 'next/image'
-import styles from '../styles/Layout.module.css'
 import ArticleList from "../components/ArticleList";
 import {dev, server} from "../config";
+import loadArticles from '../lib/load-articles'
+
 
 export default function Home({articles}) {
   return (
@@ -12,9 +12,10 @@ export default function Home({articles}) {
 }
 
 export const getStaticProps = async () => {
+    const articles = await loadArticles()
 
-    const res = dev ? await fetch(`${server}/api/articles`) : await fetch(`${server}/posts`)
-    const articles = await res.json()
+    /*const res = dev ? await fetch(`${server}/api/articles`) : await fetch(`${server}/api/articles`)
+    const articles = await res.json()*/
 
     return {
         props: {

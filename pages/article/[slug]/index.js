@@ -3,6 +3,8 @@ import {useRouter} from "next/router";
 import Link from "next/link";
 import {dev, server} from "../../../config";
 import Meta from "../../../components/Meta";
+import loadArticles from "../../../lib/load-articles";
+import loadArticlesUsingSlug from "../../../lib/load-articles-using-slug";
 
 const Article = ({article}) => {
     //const router = useRouter()
@@ -29,9 +31,11 @@ const Article = ({article}) => {
 };
 
 export const getStaticProps = async (context) => {
-    const res = await fetch(`${server}/api/articles/${context.params.slug}`)
+    /*const res = await fetch(`${server}/api/articles/${context.params.slug}`)
 
-    const article = await res.json()
+    const article = await res.json()*/
+
+    const article = await loadArticlesUsingSlug(context.params.slug)
 
     return {
         props: {
@@ -41,9 +45,10 @@ export const getStaticProps = async (context) => {
 }
 
 export const getStaticPaths = async () => {
-    const res = dev ? await fetch(`${server}/api/articles`) : await fetch(`${server}/posts`)
+    const articles = await loadArticles()
 
-    const articles = await res.json()
+    //const res = dev ? await fetch(`${server}/api/articles`) : await fetch(`${server}/api/articles`)
+    //const articles = await res.json()
 
     const slugs = articles.map(article => article.slug)
 
