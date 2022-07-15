@@ -18,3 +18,9 @@
 .nav ul li a {
     margin: 5px 15px;
 }
+
+.connect {
+    cursor: pointer;
+    position: absolute;
+    right: 50px;
+}
