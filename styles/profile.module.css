@@ -1,0 +1,17 @@
+
+.upperBar {
+    display: flex;
+    justify-content: space-between;
+    font-size: 12px;
+}
+
+.upperBar a {
+    cursor: pointer;
+}
+
+.articlesHeading {
+    font-size: 30px;
+    text-align: center;
+    margin-top: 2.5rem;
+    margin-bottom: 0.5rem;
+}

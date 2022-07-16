@@ -10,7 +10,7 @@
 }
 
 .title {
-    margin: 0;
+    margin: 0 0 2.5rem;
     line-height: 1.15;
     font-size: 2.5rem;
 }
@@ -20,8 +20,12 @@
     text-align: center;
 }
 
+.title h1  {
+    margin: 0;
+}
+
 .description {
-    margin: 4rem 0;
+    margin: 1rem 0;
     line-height: 1.5;
     font-size: 1.5rem;
 }

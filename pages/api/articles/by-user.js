@@ -1,9 +1,8 @@
-import loadArticles from "../../../lib/load-articles";
-
+import loadArticlesFromUser from "../../../lib/load-articles-from-user";
 
 export default async function handler(req, res) {
     try {
-        const articles = await loadArticles()
+        const articles = await loadArticlesFromUser(req.body.address)
 
         return res.status(200).json(articles)
     } catch (error) {

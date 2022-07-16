@@ -1,11 +1,10 @@
-import {articles} from "../../../data";
 import {connectToDatabase} from "../../../lib/mongodb";
 
 export default async function handler(req, res) {
     try {
         const { db } = await connectToDatabase()
 
-        let article = await db
+        const article = await db
             .collection('articles')
             .findOne({slug: req.query.slug})
 

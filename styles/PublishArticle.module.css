@@ -1,0 +1,35 @@
+
+.title {
+    font-size: 30px;
+    text-align: center;
+}
+
+.main {
+    margin-top: 3rem;
+}
+
+.main input, .main textarea {
+    width: 100%;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    padding: 12px 20px;
+    margin: 5px 0;
+}
+
+.main textarea {
+    height: 200px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+.submit:hover {
+    background-color: #E8E8E8;
+}
+
+.submit:active {
+    background-color: #DCDCDC;
+}
+
+
+
