@@ -1,8 +1,8 @@
 import React from 'react';
-import articleStyles from '../styles/Article.module.css'
+import articleStyles from '../../styles/Article.module.css'
 import Link from "next/link";
 
-const ArticleItem = ({article}) => {
+const ArticleBoxItem = ({article}) => {
     return (
         <Link href='/article/[slug]' as={`/article/${article.slug}`}>
             <a className={articleStyles.card}>
@@ -13,4 +13,4 @@ const ArticleItem = ({article}) => {
     );
 };
 
-export default ArticleItem;
+export default ArticleBoxItem;

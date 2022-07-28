@@ -1,14 +1,14 @@
 import React from 'react';
-import articleStyles from '../styles/Article.module.css'
-import ArticleItem from "./ArticleItem";
+import articleStyles from '../../styles/Article.module.css'
+import ArticleBoxItem from "./ArticleBoxItem";
 
-const ArticleList = ({articles}) => {
+const ListOfArticleBoxes = ({articles}) => {
     return (
         <div className={articleStyles.grid}>
             {
                 typeof articles !== 'undefined' ?
                     articles.map(article => (
-                        <ArticleItem key={article._id} article={article}></ArticleItem>
+                        <ArticleBoxItem key={article._id} article={article}></ArticleBoxItem>
                     )) :
                     <p>There are no articles yet</p>
             }
@@ -16,4 +16,4 @@ const ArticleList = ({articles}) => {
     );
 };
 
-export default ArticleList;
+export default ListOfArticleBoxes;

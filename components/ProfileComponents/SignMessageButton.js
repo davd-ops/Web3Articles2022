@@ -1,7 +1,7 @@
 import React from 'react'
 import {useWeb3} from "@3rdweb/hooks"
-import login from "../lib/login";
-import buttonStyles from '../styles/SignMessageButton.module.css'
+import login from "../../lib/login";
+import buttonStyles from '../../styles/SignMessageButton.module.css'
 
 const SignMessageButton = ({refreshState}) => {
     const { address, provider } = useWeb3()

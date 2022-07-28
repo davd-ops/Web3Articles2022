@@ -1,5 +1,5 @@
 import React from 'react'
-import publishArticleStyles from '../styles/PublishArticle.module.css'
+import publishArticleStyles from '../../styles/PublishArticle.module.css'
 
 const PublishArticle = () => {
     const [title, setTitle] = React.useState('')
@@ -9,7 +9,7 @@ const PublishArticle = () => {
     return (
         <div className={publishArticleStyles.main}>
             <h1 className={publishArticleStyles.title}>Publish article</h1>
-            <form action="">
+            <form action="components/ProfileComponents/PublishArticle">
                 <input
                     className='input'
                     id='title'

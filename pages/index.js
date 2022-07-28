@@ -1,7 +1,7 @@
-import ArticleList from "../components/ArticleList";
+import ListOfArticleBoxes from "../components/ListOfArticleBoxes/ListOfArticleBoxes";
 import {dev, server} from "../config";
 import loadArticles from '../lib/load-articles'
-import Header from "../components/Header";
+import Header from "../components/Header/Header";
 import React from "react";
 
 
@@ -9,16 +9,15 @@ export default function Home({articles}) {
   return (
     <div>
         <Header />
-        <ArticleList articles={articles} />
+        <ListOfArticleBoxes articles={articles} />
     </div>
   )
 }
 
 export const getStaticProps = async () => {
-    const articles = await loadArticles()
+    let articles = await loadArticles()
 
-    /*const res = dev ? await fetch(`${server}/api/articles`) : await fetch(`${server}/api/articles`)
-    const articles = await res.json()*/
+    articles = articles.slice(0,4)
 
     return {
         props: {

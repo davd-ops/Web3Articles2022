@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from "next/link";
-import navStyles from '../styles/Nav.module.css'
+import navStyles from '../../styles/Nav.module.css'
 import { useWeb3 } from "@3rdweb/hooks"
 
 const Nav = () => {
@@ -15,9 +15,6 @@ const Nav = () => {
                 </li>
                 <li>
                     <Link href='/articles'>Article feed</Link>
-                </li>
-                <li>
-                    <Link href='/publish'>Publish</Link>
                 </li>
                 <li className={navStyles.connect}>
                     { address ? <Link href='/profile'>{prettierAddress}</Link> : <a onClick={
