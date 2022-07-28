@@ -19,9 +19,8 @@ const Profile = ({user, articles}) => {
     const [usersArticles, setUsersArticles] = useState(articles)
     const prettierAddress = address ? address.slice(0, 5).concat('...',address.slice(address.length-3, address.length)) : null
 
-    //console.log(usersArticles)
-
     const checkForUserSession = async () => {
+        console.log('TED')
         let {user} = await (await fetch(`${server}/api/auth/get-session`)).json()
         user = typeof user !== 'undefined' ? user : null
         setLoggedUser(user)
@@ -63,7 +62,7 @@ const Profile = ({user, articles}) => {
                             <h1>Logged as {prettierAddress}</h1>
                             <h1><a onClick={logoutFromSession}>Log Out</a></h1>
                         </div>
-                        <PublishArticle />
+                        <PublishArticle refreshState={checkForUserSession} />
                         <h1 className={profileStyles.articlesHeading}>Your articles</h1>
                         <ListOfArticleBoxes articles={usersArticles} />
                     </> :
@@ -82,7 +81,7 @@ export const getServerSideProps = withIronSessionSsr(
 
         const user = typeof req.session.user !== 'undefined' ? req.session.user : null
 
-        const articles = Object.values(await loadArticlesFromUser(user?.meta))
+        const articles = await loadArticlesFromUser(user?.meta)
 
         return {
             props: {

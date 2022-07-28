@@ -30,8 +30,7 @@ async function handler(req, res) {
             await db
                 .collection('users')
                 .insertOne({
-                    address: req.body.address,
-                    articles: [],
+                    address: req.body.address
                 })
         }
 

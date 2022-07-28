@@ -1,10 +1,36 @@
 import React from 'react'
 import publishArticleStyles from '../../styles/PublishArticle.module.css'
+import {server} from "../../config";
+import login from "../../lib/login";
+import {useRouter} from "next/router";
 
-const PublishArticle = () => {
+const PublishArticle = ({refreshState}) => {
+    const router = useRouter()
     const [title, setTitle] = React.useState('')
     const [excerpt, setExcerpt] = React.useState('')
     const [body, setBody] = React.useState('')
+
+    function slugify(text) {
+        return text
+            .toString()                           // Cast to string (optional)
+            .normalize('NFKD')            // The normalize() using NFKD method returns the Unicode Normalization Form of a given string.
+            .toLowerCase()                  // Convert the string to lowercase letters
+            .trim()                                  // Remove whitespace from both sides of a string (optional)
+            .replace(/\s+/g, '-')            // Replace spaces with -
+            .replace(/[^\w\-]+/g, '')     // Remove all non-word chars
+            .replace(/\-\-+/g, '-');        // Replace multiple - with single -
+    }
+
+    const publish = async () => {
+        await fetch(`${server}/api/articles/publish`, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({title: title, excerpt: excerpt, body: body, slug: slugify(title)})
+        })
+    }
     
     return (
         <div className={publishArticleStyles.main}>
@@ -45,7 +71,17 @@ const PublishArticle = () => {
                     minLength={200}
                     maxLength={20000}
                 />
-                <input className={publishArticleStyles.submit} id='submit' type="submit" value="Submit" onClick={(event) => {event.preventDefault()}}/>
+                <input className={publishArticleStyles.submit} id='submit' type="submit" value="Submit" onClick={(e) => {
+                    e.preventDefault()
+                    publish().then(async () => {
+                        await fetch(`${server}/api/revalidate`)
+                        alert('Article published!')
+                        await router.replace('/profile')
+                        refreshState()
+                    }, (reason) => {
+                        alert(reason)
+                    })
+                }}/>
             </form>
         </div>
     )
