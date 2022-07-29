@@ -20,7 +20,6 @@ const Profile = ({user, articles}) => {
     const prettierAddress = address ? address.slice(0, 5).concat('...',address.slice(address.length-3, address.length)) : null
 
     const checkForUserSession = async () => {
-        console.log('TED')
         let {user} = await (await fetch(`${server}/api/auth/get-session`)).json()
         user = typeof user !== 'undefined' ? user : null
         setLoggedUser(user)

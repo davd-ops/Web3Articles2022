@@ -8,7 +8,9 @@ async function handler(req, res) {
     if  (
         (req.body.title.length < 10 || req.body.title.length  > 100) ||
         (req.body.title.excerpt < 10 || req.body.title.excerpt  > 100) ||
-        (req.body.title.body < 200 || req.body.title.body  > 20000)
+        (req.body.title.body < 200 || req.body.title.body  > 20000) ||
+        (req.session.user == null || typeof req.session.user == 'undefined') ||
+        (req.session.user?.meta == null || typeof req.session.user?.meta == 'undefined')
     ) {
         return res.status(500).json({
             message: 'Incorrect input data',

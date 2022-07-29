@@ -78,8 +78,8 @@ const PublishArticle = ({refreshState}) => {
                         alert('Article published!')
                         await router.replace('/profile')
                         refreshState()
-                    }, (reason) => {
-                        alert(reason)
+                    }).catch(err => {
+                        alert(err.message)
                     })
                 }}/>
             </form>

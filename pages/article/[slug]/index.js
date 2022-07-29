@@ -1,14 +1,14 @@
 import React from 'react';
-import {useRouter} from "next/router";
 import Link from "next/link";
-import {dev, server} from "../../../config";
 import Meta from "../../../components/Meta";
 import loadArticles from "../../../lib/load-articles";
 import loadArticlesUsingSlug from "../../../lib/load-articles-using-slug";
+import articleStyles from "../../../styles/Article.module.css"
+import {useRouter} from "next/router";
 
 const Article = ({article}) => {
-    //const router = useRouter()
-    ///const {id} = router.query
+    const router = useRouter()
+    const prettyAddress = article.user ? article.user.slice(0, 5).concat('...',article.user.slice(article.user.length-3, article.user.length)) : null
 
     if (article.success === false) {
         return (
@@ -22,19 +22,18 @@ const Article = ({article}) => {
     return (
         <>
             <Meta title={article.title} description={article.excerpt} />
-            <h1>{article.title}</h1>
-            <p>{article.body}</p>
-            <br />
-            <Link href='/articles'>Go Back</Link>
+            <div className={articleStyles.articleBody}>
+                <h1>{article.title}</h1>
+                <p>{article.body}</p>
+                <br />
+                <p>Article written by  <Link href='/'>{prettyAddress}</Link></p>
+                <a onClick={() => router.back()}>Go Back</a>
+            </div>
         </>
     );
 };
 
 export const getStaticProps = async (context) => {
-    /*const res = await fetch(`${server}/api/articles/${context.params.slug}`)
-
-    const article = await res.json()*/
-
     const article = await loadArticlesUsingSlug(context.params.slug)
 
     return {
@@ -47,9 +46,6 @@ export const getStaticProps = async (context) => {
 export const getStaticPaths = async () => {
     const articles = await loadArticles()
 
-    //const res = dev ? await fetch(`${server}/api/articles`) : await fetch(`${server}/api/articles`)
-    //const articles = await res.json()
-
     const slugs = articles.map(article => article.slug)
 
     const paths = slugs.map(slug => ({params: {slug: slug.toString()}}))
@@ -59,31 +55,5 @@ export const getStaticPaths = async () => {
         fallback: 'blocking'
     }
 }
-
-/*export const getStaticProps = async (context) => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${context.params.id}`)
-
-    const article = await res.json()
-
-    return {
-        props: {
-            article
-        }
-    }
-}
-
-export const getStaticPaths = async () => {
-    const res = await fetch(`https://jsonplaceholder.typicode.com/posts`)
-
-    const articles = await res.json()
-
-    const ids = articles.map(article => article.id)
-    const paths = ids.map(id => ({params: {id: id.toString()}}))
-
-    return {
-        paths,
-        fallback: false
-    }
-}*/
 
 export default Article;
