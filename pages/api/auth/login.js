@@ -24,19 +24,19 @@ async function handler(req, res) {
 
         let user = await db
             .collection('users')
-            .findOne({address: req.body.address})
+            .findOne({address: req.body.address.toLowerCase()})
 
         if (user === null) {
             await db
                 .collection('users')
                 .insertOne({
-                    address: req.body.address
+                    address: req.body.address.toLowerCase()
                 })
         }
 
         req.session.user = {
             id: 1,
-            meta: req.body.address
+            meta: req.body.address.toLowerCase()
         }
 
         await req.session.save()

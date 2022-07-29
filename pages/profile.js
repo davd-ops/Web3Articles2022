@@ -24,16 +24,21 @@ const Profile = ({user, articles}) => {
         user = typeof user !== 'undefined' ? user : null
         setLoggedUser(user)
 
-        const rawResponse = await fetch(`${server}/api/articles/by-user`, {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({address: user?.meta})
-        })
+        if (typeof user !== 'undefined' && user !== null) {
+            const rawResponse = await fetch(`${server}/api/articles/by-user`, {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({address: user?.meta.toLowerCase()})
+            })
 
-        setUsersArticles(await rawResponse.json())
+            setUsersArticles(await rawResponse.json())
+        } else {
+            setUsersArticles([])
+        }
+
     }
 
     const logoutFromSession = async () => {
@@ -44,7 +49,7 @@ const Profile = ({user, articles}) => {
     React.useEffect(() => {
         const loginAndCheckForTheSession = async () => {
             if (user === null) {
-                await login(address, signer)
+                await login(address?.toLowerCase(), signer)
             }
             checkForUserSession()
         }

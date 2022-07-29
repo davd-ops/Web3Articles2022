@@ -8,7 +8,7 @@ const SignMessageButton = ({refreshState}) => {
     const signer = (typeof provider !== 'undefined') ? provider.getSigner() : undefined
 
     const callLogin = () => {
-        login(address, signer).then( () => {
+        login(address.toLowerCase(), signer).then( () => {
             refreshState()
         })
     }

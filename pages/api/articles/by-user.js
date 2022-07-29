@@ -2,7 +2,7 @@ import loadArticlesFromUser from "../../../lib/load-articles-from-user";
 
 export default async function handler(req, res) {
     try {
-        const articles = await loadArticlesFromUser(req.body.address)
+        const articles = await loadArticlesFromUser(req.body.address.toLowerCase())
 
         return res.status(200).json(articles)
     } catch (error) {

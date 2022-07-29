@@ -8,13 +8,17 @@ import {useRouter} from "next/router";
 
 const Article = ({article}) => {
     const router = useRouter()
-    const prettyAddress = article.user ? article.user.slice(0, 5).concat('...',article.user.slice(article.user.length-3, article.user.length)) : null
+    const prettyAddress = article?.user ? article?.user.slice(0, 5).concat('...',article?.user.slice(article?.user.length-3, article?.user.length)) : null
 
-    if (article.success === false) {
+    if (typeof article === 'undefined' || article === null) {
         return (
             <>
-                <p>ERROR 404</p>
-                <h2>{article.message}</h2>
+                <div className={articleStyles.articleBody}>
+                    <p>ERROR 404</p>
+                    <h2>This article does not exist</h2>
+                    <a onClick={() => router.back()}>Go Back</a>
+                </div>
+
             </>
         )
     }
@@ -26,7 +30,7 @@ const Article = ({article}) => {
                 <h1>{article.title}</h1>
                 <p>{article.body}</p>
                 <br />
-                <p>Article written by  <Link href='/'>{prettyAddress}</Link></p>
+                <p>Article written by  <Link href='/user/[address]' as={`/user/${article.user.toLowerCase()}`}>{prettyAddress}</Link></p>
                 <a onClick={() => router.back()}>Go Back</a>
             </div>
         </>
@@ -46,7 +50,7 @@ export const getStaticProps = async (context) => {
 export const getStaticPaths = async () => {
     const articles = await loadArticles()
 
-    const slugs = articles.map(article => article.slug)
+    const slugs = articles?.map(article => article.slug)
 
     const paths = slugs.map(slug => ({params: {slug: slug.toString()}}))
 

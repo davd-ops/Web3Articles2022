@@ -6,8 +6,9 @@ const ListOfArticleBoxes = ({articles}) => {
     return (
         <div className={articleStyles.horizontalGrid}>
             {
+
                 typeof articles !== 'undefined' ?
-                    articles.map(article => (
+                    articles?.map(article => (
                         <ArticleHorizontalItem key={article._id} article={article}></ArticleHorizontalItem>
                     )) :
                     <p>There are no articles yet</p>
